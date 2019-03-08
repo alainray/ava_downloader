@@ -6,12 +6,14 @@ You must download the files with the filenames from that repository.
 
 # Requirements:
 * tqdm
+* subprocess
+* ffmpeg
 
 Input to the script is:
 
-* Input file: either 
-* Mode: whether you are downloading train/validation videos or test videos. Possible values: 'trainval', 'test'
-* Video Directory: where you want to store the videos.
+* **Input file:** either ava_file_names_trainval_v2.1.txt or ava_file_names_test_v2.1.txt.
+* **Mode:** whether you are downloading train/validation videos or test videos. Possible values: 'trainval', 'test'
+* **Video Directory:** where you want to store the videos.
 
 Script is run with:
 
@@ -21,6 +23,6 @@ So if you want to download the train and validation videos to the *'download'* d
 
 `python ava_downloader.py ava_file_names_test_v2.1.txt -m trainval -v download`
 
-#TODO:
+# TODO:
 * Add script that cuts videos to the appropriate 900-1800s range.
 * Add script to turn videos into frames.
