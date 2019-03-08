@@ -34,7 +34,7 @@ So if you just want to download the train and validation videos to the *'downloa
 
 Or if you want to download the train and validation videos and cut them in the *'processed'* directory, then you would do use:
 
-`python ava_dataset.py ava_file_names_trainval_v2.1.txt -m trainval -v download -o processed -f d`
+`python ava_dataset.py ava_file_names_trainval_v2.1.txt -m trainval -v download -o processed -f dc`
 
 ### ava_to_frames.py
 Input to the script is:
