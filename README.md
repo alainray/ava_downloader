@@ -9,6 +9,7 @@ You must download the files with the filenames from that repository.
 * subprocess
 * ffmpeg (for cutting videos)
 * OpenCV2 (for turning video into frames)
+* Tested on Ubuntu 16.04.
 
 ## HOW TO
 There are 2 scripts available on the repository:
@@ -41,9 +42,21 @@ Input to the script is:
 
 * **Input file:** either ava_file_names_trainval_v2.1.txt or ava_file_names_test_v2.1.txt.
 * **Video Directory:** directory where videos are stored.
-* **Output Folder:** where you want to store the processed frames. This script will create one directory for every video with all frames included.
+* **Output Folder:** where you want to store the processed frames. 
 * **FPS:** at how many frames per second you want to sample the videos. Default: 25.
 * **Min size:** the minimum size you want to resize the video in pixels. Default: 400 pixels.
+
+This script will create one directory for every video with all frames included. The output frames filenames will follow this pattern:
+
+`<video_id>_<second>_<number of frame>.jpg`
+
+Thus if you saved the frames in the 'frames' folder, for video id '053oq2xB3oU' then you would find the files under:
+
+`../frames/053oq2xB3oU/053oq2xB3oU_0001_000000.jpg
+../frames/053oq2xB3oU/053oq2xB3oU_0001_000001.jpg
+../frames/053oq2xB3oU/053oq2xB3oU_0001_000002.jpg
+../frames/053oq2xB3oU/053oq2xB3oU_0001_000003.jpg
+../frames/053oq2xB3oU/053oq2xB3oU_0001_000004.jpg`
 
 Script is run with:
 
