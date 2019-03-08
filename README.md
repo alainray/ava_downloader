@@ -13,7 +13,7 @@ You must download the files with the filenames from that repository.
 ## HOW TO
 There are 2 scripts available on the repository:
 * **ava_dataset.py:** this script will download and/or cut videos to the appropriate 900-1800s range where AVA labels reside. 
-* **ava_to_frames.py:** this script will turn videos downloaded from the prior script and turn them into frames. Pixel size for the minimum dimension is set by default to 400 pixels. FPS to sample at is 25. JPG quality is set at 85%.
+* **ava_to_frames.py:** Script was modified from an original script by @caspillaga. This script will turn videos downloaded by the prior script and turn them into frames. Pixel size for the minimum dimension is set by default to 400 pixels. FPS to sample at is 25. JPG quality is set at 85%.
 
 ### ava_dataset.py
 Input to the script is:
