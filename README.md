@@ -4,11 +4,18 @@ This script downloads all videos associated with the AVA (Atomic Visual Actions)
 
 You must download the files with the filenames from that repository.
 
-# Requirements:
+## Requirements:
 * tqdm
 * subprocess
-* ffmpeg
+* ffmpeg (for cutting videos)
+* OpenCV2 (for turning video into frames)
 
+## HOW TO
+There are 2 scripts available on the repository:
+* **ava_dataset.py:** this script will download and/or cut videos to the appropriate 900-1800s range where AVA labels reside. 
+* **ava_to_frames.py:** this script will turn videos downloaded from the prior script and turn them into frames. Pixel size for the minimum dimension is set by default to 400 pixels. FPS to sample at is 25. JPG quality is set at 85%.
+
+### ava_dataset.py
 Input to the script is:
 
 * **Input file:** either ava_file_names_trainval_v2.1.txt or ava_file_names_test_v2.1.txt.
@@ -25,5 +32,26 @@ So if you just want to download the train and validation videos to the *'downloa
 
 `python ava_dataset.py ava_file_names_trainval_v2.1.txt -m trainval -v download -f d`
 
-# TODO:
-* Add script to turn videos into frames.
+Or if you want to download the train and validation videos and cut them in the *'processed'* directory, then you would do use:
+
+`python ava_dataset.py ava_file_names_trainval_v2.1.txt -m trainval -v download -o processed -f d`
+
+### ava_to_frames.py
+Input to the script is:
+
+* **Input file:** either ava_file_names_trainval_v2.1.txt or ava_file_names_test_v2.1.txt.
+* **Video Directory:** directory where videos are stored.
+* **Output Folder:** where you want to store the processed frames. This script will create one directory for every video with all frames included.
+* **FPS:** at how many frames per second you want to sample the videos. Default: 25.
+* **Min size:** the minimum size you want to resize the video in pixels. Default: 400 pixels.
+
+Script is run with:
+
+`python ava_to_frames.py <file> -v <video_dir> -o <output_dir> -f <fps> -s <min_size>`
+
+So if you want to get frames from videos stored in the *'videos'* directory and save them to the *'frames'* directory, at 25 fps and with 400 pixels as the minimum size to resize the video to, then you would do:
+
+`python ava_to_frames.py ava_file_names_trainval_v2.1.txt  -v videos -o frames -f 25 -s 400`
+
+## TODO:
+* Enable threading functionality.
