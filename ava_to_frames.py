@@ -48,8 +48,8 @@ def process_frame(frame, output_folder, video_id, frame_number, current_second, 
 
 	# Generate destination path
 	frame_number = str(frame_number)
-	current_second = '0'*(2-len(str(current_second)))+ str(current_second)
-	frame_number = '0'*(6-len(frame_number))+frame_number
+	current_second = '0'*(4-len(str(current_second)))+ str(current_second)
+	frame_number = '0'*(2-len(frame_number))+frame_number
 	dst_filename = "{}_{}_{}.jpg".format(video_id, current_second,frame_number)
 	dst_filename = os.path.join(output_folder, dst_filename)
 
