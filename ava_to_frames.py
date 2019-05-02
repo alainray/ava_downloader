@@ -10,6 +10,7 @@ import os
 import random
 import argparse
 from tqdm import tqdm
+import math
 
 
 def make_dir(root, filename):
@@ -57,7 +58,7 @@ def process_frame(frame, output_folder, video_id, frame_number, current_second, 
 	cv.imwrite(dst_filename, resized_frame, [cv.IMWRITE_JPEG_QUALITY, jpg_quality])
 
 def process_video(video_path, output_folder, video_id, resize_min_size=400, fps=25):
-
+	print(video_path)
 	cam = video.create_capture(video_path)
 	video_fps = cam.get(cv.CAP_PROP_FPS) #cam.get(cv.cv.CV_CAP_PROP_FPS) #
 	frameCount = int(cam.get(cv.CAP_PROP_FRAME_COUNT))
@@ -68,20 +69,58 @@ def process_video(video_path, output_folder, video_id, resize_min_size=400, fps=
 	print("frame_time_step: {}".format(frame_time_step))
 	intervals = np.arange(0,1,1/(fps*duration))
 
-
 	current_second = 0
-	frame_number = 0
-	ret, frame = cam.read()
-	for fr, interval in enumerate(tqdm(intervals)):
-		if frame_number >= fps:
-			frame_number = 0
-		current_second = fr//fps
-		#Set next frame to closest to interval
-		cam.set(cv.CAP_PROP_POS_FRAMES,interval)
-		#capture frame
-		ret, frame = cam.read()
-		process_frame(frame, output_folder, video_id, frame_number, current_second, resize_min_size=resize_min_size)
-		frame_number += 1
+	if video_fps > 29:
+		lin = np.linspace(0,math.floor(video_fps),fps)
+	else:
+		lin = np.linspace(0,math.floor(video_fps)-1,fps)
+	while(cam.isOpened()):
+		f = 0
+		frame_number = 0
+		total_frame = 0
+		for i,elem in enumerate(lin):
+			ret, frame = cam.read()
+			total_frame += 1
+			if ret==True:
+				process_frame(frame, output_folder, video_id, frame_number, current_second, resize_min_size=resize_min_size)
+				frame_number += 1
+
+				if i != 0:
+					f = int(elem) - int(lin[i-1])
+				else:
+					f = int(lin[i+1]) - int(elem)
+
+				for _ in range(f-1):
+					ret, frame = cam.read()
+					total_frame += 1
+
+					if total_frame >= video_fps:
+						break
+			else:
+				break
+
+			if total_frame >= video_fps:
+				break
+
+		ret, frame = cam.retrieve()
+		if not ret:
+			break
+
+		current_second += 1
+
+	#current_second = 0
+	# frame_number = 0
+	# ret, frame = cam.read()
+	# for fr, interval in enumerate(tqdm(intervals)):
+	# 	if frame_number >= fps:
+	# 		frame_number = 0
+	# 	current_second = fr//fps
+	# 	#Set next frame to closest to interval
+	# 	#cam.set(cv.CAP_PROP_POS_FRAMES,interval)
+	# 	#capture frame
+	# 	ret, frame = cam.read()
+	# 	process_frame(frame, output_folder, video_id, frame_number, current_second, resize_min_size=resize_min_size)
+	# 	frame_number += 1
 
 def load_progress(output_dir):
 	path = os.path.join(output_dir,'progress.txt')
